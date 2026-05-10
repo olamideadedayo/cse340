@@ -1,5 +1,5 @@
 {
-  "name": "cse340-repo",
+  "name": "cse340",
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/olamideadedayo/cse340-repo#readme",
@@ -24,6 +24,7 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "nodemo": "^1.0.0"
+    "nodemo": "^1.0.0",
+    "nodemon": "^3.1.14"
   }
 }

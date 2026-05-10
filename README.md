@@ -1,3 +1,3 @@
 # cse340-repo
 
-default  hosting: https://cse340-j.onrender.com
+default  hosting: https://cse340-jj.onrender.com
