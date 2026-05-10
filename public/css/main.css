@@ -16,9 +16,9 @@
    ROOT VARIABLES
 ========================= */
 :root {
-  --bg: #f6f8fc;
-  --card: #ffffff;
-  --text: #1f2937;
+  --bg: #fc058d;
+  --card: #8f5c88;
+  --text: #ffffff;
   --muted: #6b7280;
   --primary: #2563eb;
   --dark: #0f172a;
@@ -40,7 +40,7 @@ body {
 ========================= */
 header {
   background: var(--dark);
-  color: white;
+  color: rgb(180, 0, 120);
   padding: 18px 24px;
   position: sticky;
   top: 0;
@@ -61,7 +61,7 @@ nav {
 }
 
 nav a {
-  color: white;
+  color: rgb(172, 0, 14);
   text-decoration: none;
   font-weight: 500;
   padding: 8px 12px;
