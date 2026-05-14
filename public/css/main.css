@@ -113,6 +113,31 @@ li {
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+li img {
+  width: 48px;
+  height: auto;
+  border-radius: 12px;
+}
+
+.page-hero {
+  display: block;
+  margin: 24px auto;
+  max-width: 200px;
+  width: 100%;
+  border-radius: 18px;
+}
+
+.main-logo {
+  display: block;
+  margin: 24px auto 0;
+  max-width: 240px;
+  width: 100%;
+  border-radius: 18px;
 }
 
 /* HOVER EFFECT */
