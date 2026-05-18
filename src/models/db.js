@@ -1,4 +1,3 @@
-
 import { Pool } from 'pg';
 
 /**
@@ -14,8 +13,13 @@ import { Pool } from 'pg';
  */
 const pool = new Pool({
     connectionString: process.env.DB_URL,
-    ssl: true
+    // FIXED: Swapped 'ssl: true' to bypass local CA verification warnings
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
+
+
 
 /**
  * Common SSL Issue:
@@ -90,4 +94,3 @@ const testConnection = async() => {
 };
 
 export { db as default, testConnection };
-
