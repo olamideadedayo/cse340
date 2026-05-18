@@ -1,25 +1,27 @@
-
 import express from 'express';
+import dotenv from 'dotenv';
+import ejs from 'ejs';
+import { fileURLToPath } from 'url'; 
+import path, { dirname } from 'path'; 
+import db, { testConnection } from './src/models/db.js';
+import { getAllOrganizations } from './src/models/organizations.js';
+import { getAllCategories } from './src/models/categories.js';
 
-import { fileURLToPath } from 'url';
-import path from 'path';
+// Setup __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Define the the application environment
+// Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 
 // Define the port number the server will listen on
 const PORT = process.env.PORT || 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
 
-
 /**
-  * Configure Express middleware
-  */
-
+ * Configure Express middleware
+ */
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -30,7 +32,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
 
-
 /**
  * Routes
  */
@@ -39,9 +40,16 @@ app.get('/', async (req, res) => {
     res.render('home', { title });
 });
 
+// FIXED: Database-driven organizations route
 app.get('/organizations', async (req, res) => {
-    const title = 'Our Partner Organizations';
-    res.render('organizations', { title });
+    try {
+        const organizations = await getAllOrganizations();
+        const title = 'Our Partner Organizations';
+        res.render('organizations', { title, organizations });
+    } catch (error) {
+        console.error("Error on organizations route:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.get('/projects', async (req, res) => {
@@ -49,12 +57,28 @@ app.get('/projects', async (req, res) => {
     res.render('projects', { title });
 });
 
+// FIXED: Database-driven categories route
 app.get('/categories', async (req, res) => {
-    const title = 'Service Project Categories';
-    res.render('categories', { title });
+    try {
+        const categories = await getAllCategories();
+        const title = 'Service Project Categories';
+        res.render('categories', { title, categories });
+    } catch (error) {
+        console.error("Route error on /categories:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://127.0.0.1:${PORT}`);
-  console.log(`Environment: ${NODE_ENV}`);
+
+/**
+ * Server Activation
+ */
+app.listen(PORT, async () => {
+    try {
+        await testConnection();
+        console.log(`Server is running at http://127.0.0.1:${PORT}`);
+        console.log(`Environment: ${NODE_ENV}`);
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    }
 });
