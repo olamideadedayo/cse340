@@ -57,7 +57,7 @@ app.get('/projects', async (req, res) => {
     res.render('projects', { title });
 });
 
-// FIXED: Database-driven categories route
+// FIXED: Database-driven  categories route
 app.get('/categories', async (req, res) => {
     try {
         const categories = await getAllCategories();
