@@ -32,7 +32,7 @@
 ========================= */
 body {
   font-family: 'Inter', system-ui, Arial, sans-serif;
-  background: linear-gradient(180deg, #f4f7ff, #eef2ff);
+  background: linear-gradient(180deg, var(--bg), var(--hover));
   color: var(--text);
   line-height: 1.6;
 }
@@ -43,7 +43,7 @@ body {
 header {
   background: linear-gradient(135deg, var(--dark), #000000);
   color: rgb(2, 175, 255);
-  padding: 18px 24px;
+  padding: 1.125rem 1.5rem; /* 18px 24px */
   position: sticky;
   top: 0;
   z-index: 100;
@@ -56,23 +56,26 @@ header h1 {
   color: white;
 }
 
-/* NAV */
+/* =========================
+   NAV
+========================= */
 nav {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+  flex-direction: column; /* Change to vertical layout */
+  gap: 0.875rem; /* 14px */
 }
 
 nav a {
-  color: #e5e7eb;
+  color: black; /* Change text color to black */
   text-decoration: none;
   font-weight: 500;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 0.5rem 0.75rem; /* 8px 12px */
+  border-radius: 0.5rem; /* 8px */
   transition: all 0.25s ease;
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus {
   background: var(--primary);
   color: white;
 }
@@ -82,13 +85,13 @@ nav a:hover {
 ========================= */
 main {
   max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 20px;
+  margin: 2.5rem auto; /* 40px */
+  padding: 0 1.25rem; /* 20px */
 }
 
 h1 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem; /* 20px */
   color: var(--text);
 }
 
@@ -99,14 +102,14 @@ ul {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  gap: 1rem; /* 16px */
 }
 
 /* CARD ITEMS */
 li {
   background: var(--card);
-  padding: 20px;
-  border-radius: 16px;
+  padding: 1.25rem; /* 20px */
+  border-radius: 1rem; /* 16px */
   border: 1px solid var(--border);
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
   font-weight: 500;
@@ -115,34 +118,34 @@ li {
   overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 0.875rem; /* 14px */
 }
 
 li img {
-  width: 48px;
+  width: 3rem; /* 48px */
   height: auto;
-  border-radius: 12px;
+  border-radius: 0.75rem; /* 12px */
 }
 
 .page-hero {
   display: block;
-  margin: 24px auto;
-  max-width: 200px;
+  margin: 1.5rem auto; /* 24px */
+  max-width: 12.5rem; /* 200px */
   width: 100%;
-  border-radius: 18px;
+  border-radius: 1.125rem; /* 18px */
 }
 
 .main-logo {
   display: block;
-  margin: 24px auto 0;
-  max-width: 240px;
+  margin: 1.5rem auto 0; /* 24px */
+  max-width: 15rem; /* 240px */
   width: 100%;
-  border-radius: 18px;
+  border-radius: 1.125rem; /* 18px */
 }
 
 /* HOVER EFFECT */
 li:hover {
-  transform: translateY(-6px);
+  transform: translateY(-0.375rem); /* -6px */
   border-color: var(--primary);
   box-shadow: 0 12px 28px rgba(79, 70, 229, 0.2);
   background: var(--hover);
@@ -153,8 +156,8 @@ li:hover {
 ========================= */
 footer {
   text-align: center;
-  padding: 24px;
-  margin-top: 50px;
+  padding: 1.5rem; /* 24px */
+  margin-top: 3.125rem; /* 50px */
   background: var(--dark);
   color: white;
   font-size: 0.9rem;
