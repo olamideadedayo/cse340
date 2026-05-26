@@ -1,15 +1,37 @@
-<%- include('partials/header') %>
+<h1><%= title %></h1>
 
-<main>
-    <h1><%= title %></h1>
-    <img class="page-hero" src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo">
-    
-<h2>Upcoming Service Projects</h2>
-<ul>
-    <li>Park Cleanup - Join us to clean up local parks and make them beautiful!</li>
-    <li>Food Drive - Help collect and distribute food to those in need.</li>
-    <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
-</ul>
+<div class="projects-container">
 
-</main>
-<%- include('partials/footer') %>
+    <% projects.forEach(project => { %>
+
+        <div class="project-card">
+
+            <h2>
+                <a href="/project/<%= project.project_id %>">
+                    <%= project.title %>
+                </a>
+            </h2>
+
+            <p>
+                Organization:
+
+                <a href="/organization/<%= project.organization_id %>">
+                    <%= project.organization_name %>
+                </a>
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                <%= project.date %>
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                <%= project.location %>
+            </p>
+
+        </div>
+
+    <% }) %>
+
+</div>
