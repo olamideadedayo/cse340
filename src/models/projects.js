@@ -39,6 +39,8 @@ const getProjectsByOrganizationId = async (organizationId) => {
     return result.rows;
 };
 
+
+
 export {
     getAllProjects,
     getProjectsByOrganizationId

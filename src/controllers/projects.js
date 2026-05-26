@@ -1,13 +1,13 @@
-// src/controllers/projects.js
+// Import any needed model functions
 import { getAllProjects } from '../models/projects.js';
 
-// Define the controller function
+// Define any controller functions
 const showProjectsPage = async (req, res) => {
     const projects = await getAllProjects();
     const title = 'Service Projects';
 
     res.render('projects', { title, projects });
-};
+};  
 
-// Export the controller function
+// Export any controller functions
 export { showProjectsPage };

@@ -9,10 +9,9 @@
 
     <h3>Service Projects</h3>
     <ul>
-       <a href="/organization/<%= organization.organization_id %>"><%= organization.name %></a>
-            <li><a href="/project/<%= project.project_id %>"><%= project.title %></a></li>
+        <% projects.forEach(project => { %>
+            <li><a href="/organization/<%= organization.organization_id %>"><%= organization.name %></a></li>
         <% }) %>
     </ul>
-    
 </main>
 <%- include('partials/footer') %>
