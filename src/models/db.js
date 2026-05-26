@@ -4,43 +4,38 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 /**
- * PostgreSQL connection pool
- * Uses Render DATABASE_URL in production
+ * Detect if we are running on Render (or production)
  */
+const isProduction = process.env.NODE_ENV === 'production';
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL || process.env.DB_URL,
+
+    // ONLY use SSL in production (Render)
+    ssl: isProduction
+        ? { rejectUnauthorized: false }
+        : false
 });
 
 /**
- * Wrapper for query logging in development mode
+ * DB wrapper
  */
-let db = null;
+let db;
 
 if (process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING === 'true') {
     db = {
         async query(text, params) {
-            try {
-                const start = Date.now();
-                const res = await pool.query(text, params);
-                const duration = Date.now() - start;
+            const start = Date.now();
+            const res = await pool.query(text, params);
+            const duration = Date.now() - start;
 
-                console.log('Executed query:', {
-                    text: text.replace(/\s+/g, ' ').trim(),
-                    duration: `${duration}ms`,
-                    rows: res.rowCount
-                });
+            console.log('Executed query:', {
+                text: text.replace(/\s+/g, ' ').trim(),
+                duration: `${duration}ms`,
+                rows: res.rowCount
+            });
 
-                return res;
-            } catch (error) {
-                console.error('Error in query:', {
-                    text: text.replace(/\s+/g, ' ').trim(),
-                    error: error.message
-                });
-                throw error;
-            }
+            return res;
         },
 
         async close() {
@@ -52,7 +47,7 @@ if (process.env.NODE_ENV === 'development' && process.env.ENABLE_SQL_LOGGING ===
 }
 
 /**
- * Test database connection
+ * Test connection
  */
 const testConnection = async () => {
     try {
