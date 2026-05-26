@@ -50,8 +50,8 @@ export async function getUpcomingProjects(number_of_projects) {
             p.location,
             p.organization_id,
             o.name AS organization_name
-        FROM projects p
-        JOIN organizations o
+        FROM project p
+        JOIN organization o
             ON p.organization_id = o.organization_id
         WHERE p.date >= CURRENT_DATE
         ORDER BY p.date ASC
@@ -73,8 +73,8 @@ export async function getProjectDetails(id) {
             p.location,
             p.organization_id,
             o.name AS organization_name
-        FROM projects p
-        JOIN organizations o
+        FROM project p
+        JOIN organization o
             ON p.organization_id = o.organization_id
         WHERE p.project_id = $1
     `;
