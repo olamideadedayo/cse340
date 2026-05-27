@@ -1,16 +1,23 @@
-import {Pool} from 'pg';
+import pkg from 'pg';
+const { Pool } = pkg;
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 /**
- * Detect if we are running on Render (or production)
+ * Detect environment and database destination
  */
 const isProduction = process.env.NODE_ENV === 'production';
+const isRemoteRenderDB = process.env.DATABASE_URL && process.env.DATABASE_URL.includes('render.com');
 
+/**
+ * Configure database connection pool with smart SSL rules
+ */
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+    connectionString: process.env.DATABASE_URL,
+    ssl: (isProduction || isRemoteRenderDB) 
+        ? { rejectUnauthorized: false } // Required for Render DB connections (local or live)
+        : false                         // Only disabled if running a local Postgres instance
 });
 
 /**
@@ -51,7 +58,7 @@ const testConnection = async () => {
         console.log('Database connection successful:', result.rows[0].current_time);
         return true;
     } catch (error) {
-        console.error('Database connection failed:', error.message);
+        console.error('Error connecting to the database:', error);
         throw error;
     }
 };
