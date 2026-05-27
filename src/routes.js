@@ -18,6 +18,7 @@ router.get('/categories', showCategoriesPage);
 // error-handling routes
 router.get('/test-error', testErrorPage);
 
-export default router;
 // Route for organization details page
 router.get('/organization/:id', showOrganizationDetailsPage);
+
+export default router;

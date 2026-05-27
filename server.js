@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
+import dotenv from 'dotenv';
 
 // Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -15,6 +16,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// Force log any uncaught exceptions immediately to the terminal
+process.on('uncaughtException', (err) => {
+    console.error('💥 CRITICAL UNCAUGHT ERROR:', err.message);
+    console.error(err.stack);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('💥 UNHANDLED REJECTION AT:', promise, 'REASON:', reason);
+});
 
 /**
   * Configure Express middleware
@@ -83,3 +94,4 @@ app.listen(PORT, async () => {
     console.error('Error connecting to the database:', error);
   }
 });
+

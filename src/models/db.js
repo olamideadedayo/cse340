@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import {Pool} from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -9,12 +9,8 @@ dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || process.env.DB_URL,
-
-    // ONLY use SSL in production (Render)
-    ssl: isProduction
-        ? { rejectUnauthorized: false }
-        : false
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
 });
 
 /**

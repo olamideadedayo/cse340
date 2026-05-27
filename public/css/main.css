@@ -189,3 +189,125 @@ a:focus {
     font-size: 1.6rem;
   }
 }
+
+
+
+
+
+
+
+
+/* =========================================
+   PROJECTS PAGE GRAPHICS & LAYOUT
+========================================= */
+
+/* Hero or Intro text wrapper */
+.projects-intro {
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.projects-intro p {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+/* Projects Card Grid Wrapper */
+.projects-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+/* Individual Project Card Styling */
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  align-items: flex-start; /* Fixes alignment from your base 'li' rule */
+}
+
+/* Card Interactive Hover Action */
+.project-card:hover {
+  transform: translateY(-0.5rem);
+  border-color: var(--primary);
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.12);
+  background: var(--card); /* Keeps the background clean white */
+}
+
+/* Card Typography */
+.project-card h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.3;
+}
+
+.project-card .org-name {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+}
+
+.project-card .project-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+/* Meta Details Layout (Date & Location) */
+.project-meta {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.meta-item strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+/* Detail Navigation Button Link */
+.btn-details {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background-color: var(--primary);
+  color: white !important; /* Forces link text color to stay white */
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-details:hover {
+  background-color: #3b32b3; /* Slightly darker shade for interactive feedback */
+}

@@ -15,7 +15,12 @@ const showOrganizationDetailsPage = async (req, res) => {
     const projects = await getProjectsByOrganizationId(organizationId);
     const title = 'Organization Details';
 
-    res.render('organization', {title, organizationDetails, projects});
+    // Rename the key here from organizationDetails to organization
+    res.render('organization', { 
+        title, 
+        organization: organizationDetails, // <-- Map it to the name your view wants
+        projects 
+    });
 };
 
 // Export any controller functions
