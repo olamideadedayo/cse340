@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<main>
+    <h1><%= category.name %></h1>
+    <p class="category-intro">Explore active service projects categorized under <strong><%= category.name %></strong>.</p>
+
+    <hr style="border: 0; border-top: 1px solid var(--border); margin-bottom: 2rem;" />
+
+    <h2>Service Projects</h2>
+    <% if (projects && projects.length > 0) { %>
+        <ul class="project-list">
+            <% projects.forEach(project => { %>
+                <li>
+                    <a href="/project/<%= project.project_id %>" class="project-link">
+                        <%= project.title %>
+                    </a>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p class="no-projects">There are currently no service projects assigned to this category.</p>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>

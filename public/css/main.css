@@ -1,313 +1,340 @@
-/* =========================
-   IMPORT FONT
-========================= */
+/* ==========================================================================
+   1. IMPORT FONTS & SYSTEM VARIABLES
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* =========================
-   RESET
-========================= */
+:root {
+  --bg: #f8fafc;           /* Ultra-clean slate background */
+  --card: #ffffff;         /* Pure white container surfaces */
+  --text: #0f172a;         /* Deep obsidian main text */
+  --muted: #64748b;        /* Professional slate grey for subtext */
+  --primary: #4f46e5;      /* Vivid Indigo for primary actions/links */
+  --secondary: #0ea5e9;    /* Bright Sky Blue for corporate/branding accents */
+  --dark: #0f172a;         /* Deep slate-black for headers and footers */
+  --border: #e2e8f0;       /* Crisp, thin divider lines */
+  --hover: #f1f5f9;        /* Subtle interactive background shift */
+}
+
+/* ==========================================================================
+   2. GLOBAL RESET & BASE RULES
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* =========================
-   ROOT VARIABLES (CLEAN MODERN PALETTE)
-========================= */
-:root {
-  --bg: #f4f7ff;
-  --card: #ffffff;
-  --text: #0f172a;
-  --muted: #64748b;
-  --primary: #4f46e5;
-  --secondary: #06b6d4;
-  --dark: #0b1220;
-  --border: #e2e8f0;
-  --hover: #eef2ff;
-}
-
-/* =========================
-   BASE
-========================= */
 body {
-  font-family: 'Inter', system-ui, Arial, sans-serif;
-  background: linear-gradient(180deg, var(--bg), var(--hover));
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* =========================
-   HEADER
-========================= */
+main {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   3. SITE HEADER & NAVIGATION
+   ========================================================================== */
 header {
-  background: linear-gradient(135deg, var(--dark), #000000);
-  color: rgb(2, 175, 255);
-  padding: 1.125rem 1.5rem; /* 18px 24px */
+  background: var(--dark);
+  padding: 1.25rem 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
 }
 
 header h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
 }
 
-/* =========================
-   NAV
-========================= */
 nav {
   display: flex;
-  flex-direction: column; /* Change to vertical layout */
-  gap: 0.875rem; /* 14px */
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 nav a {
-  color: black; /* Change text color to black */
+  color: #94a3b8;
   text-decoration: none;
   font-weight: 500;
-  padding: 0.5rem 0.75rem; /* 8px 12px */
-  border-radius: 0.5rem; /* 8px */
-  transition: all 0.25s ease;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
 }
 
 nav a:hover,
 nav a:focus {
-  background: var(--primary);
-  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
 }
 
-/* =========================
-   MAIN LAYOUT
-========================= */
-main {
-  max-width: 1100px;
-  margin: 2.5rem auto; /* 40px */
-  padding: 0 1.25rem; /* 20px */
-}
-
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1.25rem; /* 20px */
-  color: var(--text);
-}
-
-/* =========================
-   GRID (CATEGORIES / LISTS)
-========================= */
-ul {
+/* ==========================================================================
+   4. BASE GRID & LIST CARD MODULES (CATEGORIES LIST)
+   ========================================================================== */
+ul.categories-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem; /* 16px */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  padding: 0;
 }
 
-/* CARD ITEMS */
-li {
+ul.categories-list li {
   background: var(--card);
-  padding: 1.25rem; /* 20px */
-  border-radius: 1rem; /* 16px */
   border: 1px solid var(--border);
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-  font-weight: 500;
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: 0.875rem; /* 14px */
 }
 
-li img {
-  width: 3rem; /* 48px */
-  height: auto;
-  border-radius: 0.75rem; /* 12px */
-}
-
-.page-hero {
+ul.categories-list li a {
   display: block;
-  margin: 1.5rem auto; /* 24px */
-  max-width: 12.5rem; /* 200px */
   width: 100%;
-  border-radius: 1.125rem; /* 18px */
+  padding: 1.25rem;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.main-logo {
-  display: block;
-  margin: 1.5rem auto 0; /* 24px */
-  max-width: 15rem; /* 240px */
-  width: 100%;
-  border-radius: 1.125rem; /* 18px */
-}
-
-/* HOVER EFFECT */
-li:hover {
-  transform: translateY(-0.375rem); /* -6px */
+ul.categories-list li:hover {
+  transform: translateY(-4px);
   border-color: var(--primary);
-  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 12px 20px -3px rgba(79, 70, 229, 0.16);
   background: var(--hover);
 }
 
-/* =========================
-   FOOTER
-========================= */
-footer {
-  text-align: center;
-  padding: 1.5rem; /* 24px */
-  margin-top: 3.125rem; /* 50px */
-  background: var(--dark);
-  color: white;
-  font-size: 0.9rem;
-}
-
-/* =========================
-   ACCESSIBILITY
-========================= */
-a:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 600px) {
-  header {
-    text-align: center;
-  }
-
-  nav {
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-}
-
-
-
-
-
-
-
-
-/* =========================================
-   PROJECTS PAGE GRAPHICS & LAYOUT
-========================================= */
-
-/* Hero or Intro text wrapper */
-.projects-intro {
-  margin-bottom: 2rem;
-  max-width: 600px;
-}
-
-.projects-intro p {
+/* ==========================================================================
+   5. SINGLE CATEGORY VIEW & LISTINGS
+   ========================================================================== */
+.category-intro {
   color: var(--muted);
   font-size: 1.1rem;
+  margin-bottom: 2rem;
 }
 
-/* Projects Card Grid Wrapper */
-.projects-grid {
+.project-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
   padding: 0;
+}
+
+.project-list li {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  transition: all 0.25s ease;
+}
+
+.project-link {
+  display: block;
+  width: 100%;
+  padding: 1.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.project-list li:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.no-projects {
+  color: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   6. PROJECTS OVERVIEW PAGE (MULTI-CARD GRID)
+   ========================================================================== */
+.projects-container, .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
   margin-top: 1.5rem;
 }
 
-/* Individual Project Card Styling */
 .project-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 1rem;
-  padding: 1.75rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1.25rem;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  align-items: flex-start; /* Fixes alignment from your base 'li' rule */
+  gap: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Card Interactive Hover Action */
-.project-card:hover {
-  transform: translateY(-0.5rem);
-  border-color: var(--primary);
-  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.12);
-  background: var(--card); /* Keeps the background clean white */
-}
-
-/* Card Typography */
-.project-card h2 {
-  font-size: 1.35rem;
+.project-card h2 a {
+  color: var(--text);
+  text-decoration: none;
   font-weight: 700;
-  color: var(--dark);
-  line-height: 1.3;
+  font-size: 1.4rem;
+  transition: color 0.2s ease;
 }
 
-.project-card .org-name {
-  display: inline-block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--secondary);
-  margin-bottom: 0.5rem;
+.project-card h2 a:hover {
+  color: var(--primary);
 }
 
-.project-card .project-desc {
+.project-card p {
   color: var(--muted);
   font-size: 0.95rem;
-  line-height: 1.5;
+}
+
+.project-card p a {
+  color: var(--secondary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.1);
+}
+
+/* ==========================================================================
+   7. PROJECT DETAILS PAGE & INTERACTIVE PILL TAGS
+   ========================================================================== */
+.project-detail h1 {
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
-/* Meta Details Layout (Date & Location) */
 .project-meta {
-  width: 100%;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.project-tags {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--border);
-  padding-top: 1rem;
+}
+
+.project-tags h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.tags-container {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text);
-}
-
-.meta-item strong {
-  color: var(--dark);
-  font-weight: 600;
-}
-
-/* Detail Navigation Button Link */
-.btn-details {
+.category-tag {
   display: inline-block;
-  width: 100%;
-  text-align: center;
-  background-color: var(--primary);
-  color: white !important; /* Forces link text color to stay white */
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  background: #eef2ff;      /* Ultra soft primary tint */
+  color: var(--primary);
+  border: 1px solid #e0e7ff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
-  margin-top: 0.5rem;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.btn-details:hover {
-  background-color: #3b32b3; /* Slightly darker shade for interactive feedback */
+.category-tag:hover {
+  background: var(--primary);
+  color: #ffffff !important;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* ==========================================================================
+   8. MEDIA GRAPHICS & FOOTER
+   ========================================================================== */
+.main-logo, .page-hero {
+  display: block;
+  margin: 2rem auto;
+  max-width: 220px;
+  width: 100%;
+  border-radius: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 5rem;
+  background: var(--dark);
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Accessibility state */
+a:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   9. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 640px) {
+  main {
+    margin: 1.5rem auto;
+  }
+  header {
+    text-align: center;
+    padding: 1.25rem 1rem;
+  }
+  nav {
+    justify-content: center;
+  }
+  h1 {
+    font-size: 1.75rem;
+  }
+  .project-card {
+    padding: 1.5rem;
+  }
 }

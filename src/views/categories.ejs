@@ -8,7 +8,7 @@
         <!-- Loop through the array of category objects sent by the server -->
         <% categories.forEach(category => { %>
             <li>
-                <strong><%= category.name %></strong>
+            <a href="/category/<%= category.category_id %>"><%= category.name %></a>
             </li>
         <% }); %>
     </ul>

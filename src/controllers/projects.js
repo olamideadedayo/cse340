@@ -1,24 +1,34 @@
-// Import any needed model functions
-import {getUpcomingProjects,getProjectDetails} from '../models/projects.js';
+import {
+    getUpcomingProjects,
+    getProjectDetails
+} from '../models/projects.js';
+
+// Fixed the import path from 'categories.js' to 'category.js'
+import {
+    getCategoriesByProjectId
+} from '../models/category.js';
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
-// Define any controller functions
+// Show projects page
 const showProjectsPage = async (req, res) => {
     try {
         const projects = await getUpcomingProjects(
             NUMBER_OF_UPCOMING_PROJECTS
         );
 
-        const title = 'Upcoming Service Projects';
+        res.render('projects', {
+            title: 'Upcoming Service Projects',
+            projects
+        });
 
-        res.render('projects', { title, projects });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
     }
 };
 
+// Show single project details
 const showProjectDetailsPage = async (req, res) => {
     try {
         const { id } = req.params;
@@ -29,16 +39,22 @@ const showProjectDetailsPage = async (req, res) => {
             return res.status(404).send('Project not found');
         }
 
+        // Fetches categories using our newly added model function
+        const categories = await getCategoriesByProjectId(id);
+
         res.render('project', {
             title: project.title,
-            project
+            project,
+            categories // Sent directly to the view
         });
+
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
     }
 };
 
-// Export any controller functions
-export {showProjectsPage,showProjectDetailsPage
+export {
+    showProjectsPage,
+    showProjectDetailsPage
 };
