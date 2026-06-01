@@ -19,7 +19,7 @@ import { projectValidation } from './controllers/projects.js';
 import {Route} from 'express';
 import { showAssignCategoriesForm, processAssignCategoriesForm } from './controllers/categories.js';
 import {showEditProjectForm, processEditProjectForm} from './controllers/projects.js';
-
+import {showNewCategoryForm, processNewCategoryForm, showEditCategoryForm, processEditCategoryForm, categoryValidation} from './controllers/categories.js';
 const router = express.Router();
 
 router.get('/', showHomePage);
@@ -70,5 +70,20 @@ router.get('/edit-project/:id', showEditProjectForm);
 
 // Route to process the Edit Project Form submission (POST)
 router.post('/edit-project/:id', processEditProjectForm);
+
+// --- Create New Category Routes ---
+// GET route to display the blank form
+router.get('/new-category', showNewCategoryForm);
+
+// POST route to handle form submission with server-side validation middleware
+router.post('/new-category', categoryValidation, processNewCategoryForm);
+
+
+// --- Edit Existing Category Routes ---
+// GET route to display the pre-populated form
+router.get('/edit-category/:id', showEditCategoryForm);
+
+// POST route to process the category name update with validation middleware
+router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 
 export default router;

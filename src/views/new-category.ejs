@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<h1><%= title %></h1>
+
+<main class="form-container">
+    <h1><%= title %></h1>
+
+    <% if (locals.flash && flash.error) { %>
+        <div class="alert alert-danger">
+            <%= flash.error %>
+        </div>
+    <% } %>
+
+    <form action="/new-category" method="POST" class="project-form">
+        <div class="form-group">
+            <label for="name">Category Name:</label>
+            <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value="<%= categoryName %>" 
+            required maxlength="100" 
+            placeholder="e.g., Environment, Elderly Care">
+        </div>
+
+        <div class="form-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button type="submit" class="btn-submit">Create Category</button>
+            <a href="/categories" class="btn-cancel" style="text-decoration: none; padding: 0.5rem 1rem; background-color: #e2e8f0; color: #4a5568; border-radius: 4px; display: inline-block;">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<%- include('partials/footer') %>

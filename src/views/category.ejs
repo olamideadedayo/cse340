@@ -1,7 +1,14 @@
 <%- include('partials/header') %>
 
 <main>
-    <h1><%= category.name %></h1>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+        <h1 style="margin: 0;"><%= category.name %></h1>
+        
+        <a href="/edit-category/<%= category.category_id %>" class="btn-submit" style="text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem;">
+            Edit Category Name
+        </a>
+    </div>
+
     <p class="category-intro">Explore active service projects categorized under <strong><%= category.name %></strong>.</p>
 
     <hr style="border: 0; border-top: 1px solid var(--border); margin-bottom: 2rem;" />
