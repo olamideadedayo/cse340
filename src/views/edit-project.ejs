@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<main class="form-container">
+    <h1><%= title %></h1>
+
+    <% if (locals.flash && flash.error) { %>
+        <div class="alert alert-danger">
+            <%= flash.error %>
+        </div>
+    <% } %>
+
+    <form action="/edit-project/<%= project.project_id %>" method="POST" class="project-form">
+        
+        <div class="form-group">
+            <label for="title">Project Title:</label>
+            <input type="text" id="title" name="title" value="<%= project.title %>" required minlength="3" maxlength="200">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required maxlength="1000" rows="5"><%= project.description %></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="<%= project.location %>" required maxlength="200">
+        </div>
+
+        <div class="form-group">
+            <label for="date">Project Date:</label>
+            <input type="date" id="date" name="date" value="<%= project.formattedDate %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="organizationId">Assigned Organization:</label>
+            <select id="organizationId" name="organizationId" required>
+                <option value="">-- Select an Organization --</option>
+                <% organizations.forEach(org => { %>
+                    <option value="<%= org.organization_id %>" 
+                        <%= org.organization_id === project.organization_id ? 'selected' : '' %>>
+                        <%= org.name %>
+                    </option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="form-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button type="submit" class="btn-submit">Save Changes</button>
+            <a href="/project/<%= project.project_id %>" class="btn-cancel" style="text-decoration: none; padding: 0.5rem 1rem; background-color: #e2e8f0; color: #4a5568; border-radius: 4px; display: inline-block;">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<%- include('partials/footer') %>

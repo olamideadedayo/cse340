@@ -2,7 +2,8 @@
 import { 
     getUpcomingProjects, 
     getProjectDetails, 
-    createProject 
+    createProject,
+    updateProject // Added import to ensure code runs without errors
 } from '../models/projects.js';
 import { getCategoriesByProjectId } from '../models/category.js';
 import { getAllOrganizations } from '../models/organizations.js';
@@ -112,11 +113,64 @@ const showProjectDetailsPage = async (req, res) => {
     }
 };
 
-// 4. EXPORTS
+// Display the Edit Service Project Form (GET) - CONVERTED TO ARROW FUNCTION FOR CONSISTENCY
+const showEditProjectForm = async (req, res, next) => {
+    try {
+        const projectId = req.params.id;
+        
+        // 1. Get the project data from the model
+        const project = await getProjectDetails(projectId);
+        
+        // 2. Get a list of all organizations for the dropdown selector
+        const organizations = await getAllOrganizations();
+        
+        if (!project) {
+            const err = new Error('Project not found');
+            err.status = 404;
+            throw err;
+        }
+
+        // Format the date to YYYY-MM-DD so it cleanly populates the HTML5 date picker input field
+        if (project.date) {
+            const dateObj = new Date(project.date);
+            project.formattedDate = dateObj.toISOString().split('T')[0];
+        }
+
+        // 3. Pass this data to the edit view template
+        res.render('edit-project', {
+            title: `Edit ${project.title}`,
+            project,
+            organizations,
+            errors: null
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Process the Update Form Submission (POST) - CONVERTED TO ARROW FUNCTION FOR CONSISTENCY
+const processEditProjectForm = async (req, res, next) => {
+    try {
+        const projectId = req.params.id;
+        const { title, description, location, date, organizationId } = req.body;
+
+        // Pass form data parameters to our updated model function
+        await updateProject(projectId, title, description, location, date, organizationId);
+
+        // Redirect the user back to the individual project details page after the update is complete
+        res.redirect(`/project/${projectId}`);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// 4. UNIFIED EXPORTS AT THE BOTTOM
 export {
     showProjectsPage,
     showProjectDetailsPage,
     showNewProjectForm,
     processNewProjectForm,
+    showEditProjectForm,
+    processEditProjectForm,
     projectValidation
 };

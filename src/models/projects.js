@@ -61,6 +61,29 @@ const createProject = async (title, description, location, date, organizationId)
     return result.rows[0].project_id;
 }
 
+// Function to update an existing service project in the database
+async function updateProject(projectId, title, description, location, date, organizationId) {
+    try {
+        const sql = `
+            UPDATE project 
+            SET title = $1, description = $2, location = $3, date = $4, organization_id = $5
+            WHERE project_id = $6
+            RETURNING *;
+        `;
+        
+        const result = await db.query(sql, [title, description, location, date, organizationId, projectId]);
+        
+        // If the update affected 0 rows, it means the project ID wasn't found
+        if (result.rowCount === 0) {
+            throw new Error('Project update failed: Project record not found.');
+        }
+        
+        return result.rows[0];
+    } catch (error) {
+        console.error('Database Error in updateProject:', error);
+        throw error;
+    }
+}
 
 export async function getUpcomingProjects(number_of_projects) {
     const sql = `
@@ -110,5 +133,6 @@ export async function getProjectDetails(id) {
 export {
     getAllProjects,
     getProjectsByOrganizationId,
-    createProject
+    createProject,
+    updateProject
 };

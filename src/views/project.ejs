@@ -1,14 +1,20 @@
-
 <%- include('partials/header') %>
 
 <h1><%= title %></h1>
 
 <div class="project-tags">
-    <div class="project-tags-header">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
         <h3 style="margin: 0;">Categories:</h3>
-        <a href="/project/<%= project.project_id %>/assign-categories" class="btn-submit" style="text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
-            Edit Categories
-        </a>
+        
+        <div style="display: flex; gap: 0.5rem;">
+            <a href="/edit-project/<%= project.project_id %>" class="btn-submit" style="text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.8rem; background-color: #4a5568;">
+                Edit Project
+            </a>
+            
+            <a href="/project/<%= project.project_id %>/assign-categories" class="btn-submit" style="text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+                Edit Categories
+            </a>
+        </div>
     </div>
 
     <% if (categories && categories.length > 0) { %>
@@ -23,5 +29,4 @@
         <p class="no-projects">No category tags assigned to this project.</p>
     <% } %>
 </div>
-
 <%- include('partials/footer') %>

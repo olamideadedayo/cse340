@@ -18,6 +18,7 @@ import { processNewProjectForm } from './controllers/projects.js';
 import { projectValidation } from './controllers/projects.js';
 import {Route} from 'express';
 import { showAssignCategoriesForm, processAssignCategoriesForm } from './controllers/categories.js';
+import {showEditProjectForm, processEditProjectForm} from './controllers/projects.js';
 
 const router = express.Router();
 
@@ -63,5 +64,11 @@ router.post(
     '/project/:projectId/assign-categories',
     processAssignCategoriesForm
 );
+
+// Route to display the Edit Project Form (GET)
+router.get('/edit-project/:id', showEditProjectForm);
+
+// Route to process the Edit Project Form submission (POST)
+router.post('/edit-project/:id', processEditProjectForm);
 
 export default router;

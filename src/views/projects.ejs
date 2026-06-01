@@ -1,4 +1,3 @@
-
 <%- include('partials/header') %>
 
 <h1><%= title %></h1>
@@ -33,6 +32,13 @@
                 <%= project.location %>
             </p>
 
+            <!-- ✅ ADDED LINK -->
+            <p>
+                <a href="/project/<%= project.project_id %>/assign-categories">
+                    Assign Categories
+                </a>
+            </p>
+
         </div>
 
     <% }) %>
@@ -41,6 +47,6 @@
 
 <div class="action-container">
     <p><a href="/new-project">Add a New Service Project</a></p>
-    
 </div>
+
 <%- include('partials/footer') %>
