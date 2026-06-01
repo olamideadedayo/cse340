@@ -37,7 +37,8 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Set up session management
 app.use(session({
-    secret: SESSION_SECRET,
+    // Updated: Properly pointing to the process.env namespace
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 60 * 60 * 1000 } // Session expires after 1 hour of inactivity
