@@ -490,3 +490,199 @@ a:focus {
     padding: 1.25rem;
   }
 }
+
+
+
+/* Flash message styles */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.alert.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+
+/* ==========================================
+   W04: Professional Form & Flash Message Styles
+   ========================================== */
+
+/* Container for the form page to center content */
+.form-page {
+    max-width: 650px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.form-page h1 {
+    color: #2c3e50;
+    font-size: 1.85rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 0.5rem;
+}
+
+/* Elegant card-like container for the form */
+.form-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Stack label and inputs neatly */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+/* Inputs, dropdowns, and textareas */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2d3748;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Interactive focus glow */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.25);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Form Action layout alignment */
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.btn-submit {
+    background-color: #3182ce;
+    color: white;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #2b6cb0;
+}
+
+.btn-cancel {
+    color: #718096;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.btn-cancel:hover {
+    color: #4a5568;
+}
+
+/* --- Clean Flash Message Notifications --- */
+.flash-container {
+    max-width: 650px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+}
+
+.flash-message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Red error alerts */
+.flash-message.error {
+    background-color: #fed7d7;
+    color: #9b2c2c;
+    border-left: 5px solid #e53e3e;
+}
+
+/* Green success alerts */
+.flash-message.success {
+    background-color: #c6f6d5;
+    color: #22543d;
+    border-left: 5px solid #38a169;
+}
+
+
+
+
+/* Container for the tags layout */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Individual tag styling */
+.category-tag {
+    background-color: #edf2f7;
+    color: #4a5568;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 9999px; /* Pill shape */
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.category-tag:hover {
+    background-color: #cbd5e0;
+    color: #2d3748;
+}

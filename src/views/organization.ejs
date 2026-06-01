@@ -25,6 +25,10 @@
             <p>There are currently no upcoming projects scheduled for this organization.</p>
         <% } %>
     </ul>
-
+    <div class="action-container">
+    <a href="/edit-organization/<%= organization.organization_id %>" class="btn-action">
+        Edit Organization Details
+    </a>
+    </div>
 </main>
 <%- include('partials/footer') %>

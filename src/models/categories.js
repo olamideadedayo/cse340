@@ -78,9 +78,37 @@ const getProjectsByCategoryId = async (categoryId) => {
     }
 };
 
+// Helper function to insert a single link (used only internally)
+const assignCategoryToProject = async (categoryId, projectId) => {
+    const query = `
+        INSERT INTO project_category (category_id, project_id)
+        VALUES ($1, $2);
+    `;
+    // Assumes your file imports the database connection as 'db'
+    await db.query(query, [categoryId, projectId]);
+};
+
+// Main function to replace project categories cleanly
+const updateCategoryAssignments = async (projectId, categoryIds) => {
+    // 1. Wipe out any existing category mappings for this specific project
+    const deleteQuery = `
+        DELETE FROM project_category
+        WHERE project_id = $1;
+    `;
+    await db.query(deleteQuery, [projectId]);
+
+    // 2. Loop through and rebuild the selections safely
+    for (const categoryId of categoryIds) {
+        await assignCategoryToProject(categoryId, projectId);
+    }
+};
+
+
+
 export {
     getAllCategories,
     getCategoryById,
     getCategoriesByProjectId,
-    getProjectsByCategoryId
+    getProjectsByCategoryId,
+    updateCategoryAssignments
 };
