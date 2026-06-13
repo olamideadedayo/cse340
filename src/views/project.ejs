@@ -28,5 +28,9 @@
     <% } else { %>
         <p class="no-projects">No category tags assigned to this project.</p>
     <% } %>
+    <% if (user && user.role_name === 'admin') { %>
+    <a href="/edit-project/<%= project.project_id %>" class="btn">Edit Project Details</a>
+    <a href="/project/<%= project.project_id %>/assign-categories" class="btn">Manage Categories</a>
+<% } %>
 </div>
 <%- include('partials/footer') %>

@@ -2,12 +2,15 @@
 
 <h1><%= title %></h1>
 
+<div class="action-container" style="margin-bottom: 1.5rem;">
+    <% if (typeof user !== 'undefined' && user && user.role_name === 'admin') { %>
+        <a href="/new-project" class="btn">Add New Project</a>
+    <% } %>
+</div>
+
 <div class="projects-container">
-
     <% projects.forEach(project => { %>
-
         <div class="project-card">
-
             <h2>
                 <a href="/project/<%= project.project_id %>">
                     <%= project.title %>
@@ -16,7 +19,6 @@
 
             <p>
                 Organization:
-
                 <a href="/organization/<%= project.organization_id %>">
                     <%= project.organization_name %>
                 </a>
@@ -32,21 +34,14 @@
                 <%= project.location %>
             </p>
 
-            <!-- ✅ ADDED LINK -->
-            <p>
-                <a href="/project/<%= project.project_id %>/assign-categories">
-                    Assign Categories
-                </a>
-            </p>
-
+            <% if (typeof user !== 'undefined' && user && user.role_name === 'admin') { %>
+                <div class="admin-actions" style="margin-top: 1rem; border-top: 1px dashed #ccc; padding-top: 0.5rem;">
+                    <a href="/edit-project/<%= project.project_id %>" class="btn btn-secondary" style="font-size: 0.85rem; margin-right: 5px;">Edit Project</a>
+                    <a href="/project/<%= project.project_id %>/assign-categories" class="btn btn-secondary" style="font-size: 0.85rem;">Manage Categories</a>
+                </div>
+            <% } %>
         </div>
-
     <% }) %>
-
-</div>
-
-<div class="action-container">
-    <p><a href="/new-project">Add a New Service Project</a></p>
 </div>
 
 <%- include('partials/footer') %>

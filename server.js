@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -7,6 +6,7 @@ import router from './src/routes.js';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import flash from './src/middleware/flash.js';
+dotenv.config();
 
 // Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -37,22 +37,18 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Set up session management
 app.use(session({
-    // Updated: Properly pointing to the process.env namespace
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 60 * 60 * 1000 } // Session expires after 1 hour of inactivity
 }));
 
-
 // Use flash message middleware
 app.use(flash);
-
 
 // Allow Express to receive and process common POST data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -63,7 +59,6 @@ app.set('view engine', 'ejs');
 // Tell Express where to find your templates
 app.set('views', path.join(__dirname, 'src/views'));
 
-
 // Middleware to log all incoming requests
 app.use((req, res, next) => {
     if (NODE_ENV === 'development') {
@@ -72,13 +67,20 @@ app.use((req, res, next) => {
     next(); // Pass control to the next middleware or route
 });
 
-
-
-// Middleware to make NODE_ENV available to all templates
+// Locate this block in server.js and make sure it assigns res.locals.user
 app.use((req, res, next) => {
-    res.locals.NODE_ENV = NODE_ENV;
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
+
+    // 👈 Crucial: pass the full user session data (including role_name) to templates
+    res.locals.user = req.session.user || null; 
+
+    res.locals.NODE_ENV = process.env.NODE_ENV; // ensure process context is read properly
     next();
 });
+
 
 // Use the imported router to handle routes
 app.use(router);
@@ -120,4 +122,3 @@ app.listen(PORT, async () => {
     console.error('Error connecting to the database:', error);
   }
 });
-

@@ -6,6 +6,12 @@
     <h2>Welcome to the CSE 340 Service Network!</h2>
     <p>Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.</p>
 
+    <% if (isLoggedIn) { %>
+        <div class="dashboard-shortcut" style="margin: 20px 0; padding: 15px; background-color: #f4f6f9; border-left: 4px solid #007bff; border-radius: 4px;">
+            <p style="margin: 0;"><strong>Logged In Account Shortcut:</strong> <a href="/dashboard" class="btn">My Dashboard ➔</a></p>
+        </div>
+    <% } %>
+
     <img class="main-logo" src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo">
 
 </main>

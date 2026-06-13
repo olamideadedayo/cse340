@@ -5,16 +5,20 @@
     <p>Browse our service projects by selecting a category below:</p>
     
     <div style="margin-bottom: 1.5rem;">
-        <a href="/new-category" class="btn-submit" style="text-decoration: none; display: inline-block;">
-            Add New Category
-        </a>
+        <% if (typeof user !== 'undefined' && user && user.role_name === 'admin') { %>
+            <a href="/new-category" class="btn">Add New Category</a>
+        <% } %>
     </div>
     
     <ul class="categories-list">
         <% categories.forEach(category => { %>
             <li>
                 <a href="/category/<%= category.category_id %>"><%= category.name %></a>
-            </td>
+                
+                <% if (typeof user !== 'undefined' && user && user.role_name === 'admin') { %>
+                    <a href="/edit-category/<%= category.category_id %>" style="margin-left: 10px; color: #dc3545; font-size: 0.9rem;">(Edit)</a>
+                <% } %>
+            </li>
         <% }); %>
     </ul>
 </main>

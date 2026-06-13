@@ -1,18 +1,25 @@
 <%- include('partials/header') %>
 
-<ul>
-    <% organizations.forEach(organization => { %>
-        <li>
-            <a href="/organization/<%= organization.organization_id %>"><%= organization.name %></a>
-        </li>
-    <% }); %>
-</ul>
-<h2>
-<ul>
-    <div class="action-container">
-   <p><a href="/new-organization">Add a new organization</a></p>
-</div>
-</ul>
-</h2>
+<main>
+    <h1>Organizations</h1>
+    
+    <div class="action-container" style="margin-bottom: 1.5rem;">
+        <% if (typeof user !== 'undefined' && user && user.role_name === 'admin') { %>
+            <a href="/new-organization" class="btn">Add New Organization</a>
+        <% } %>
+    </div>
+
+    <ul class="organizations-list">
+        <% organizations.forEach(organization => { %>
+            <li>
+                <a href="/organization/<%= organization.organization_id %>"><%= organization.name %></a>
+                
+                <% if (typeof user !== 'undefined' && user && user.role_name === 'admin') { %>
+                    <a href="/edit-organization/<%= organization.organization_id %>" style="margin-left: 10px; color: #dc3545; font-size: 0.9rem;">(Edit)</a>
+                <% } %>
+            </li>
+        <% }); %>
+    </ul>
+</main>
 
 <%- include('partials/footer') %>
