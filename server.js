@@ -1,12 +1,17 @@
 import express from 'express';
+import session from 'express-session';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
 import dotenv from 'dotenv';
-import session from 'express-session';
 import flash from './src/middleware/flash.js';
+import pgSession from 'connect-pg-simple'; 
+import db from './src/models/db.js';       
+
 dotenv.config();
+
+const PostgresStore = pgSession(session);  
 
 // Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -16,8 +21,6 @@ const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const SESSION_SECRET = process.env.SESSION_SECRET;
 
 const app = express();
 
@@ -32,15 +35,22 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 /**
-  * Configure Express middleware
-  */
+ * Configure Express middleware
+ */
 
-// Set up session management
+// Persistent PostgreSQL Session Management Setup
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    store: new PostgresStore({
+        pool: db,                
+        tableName: 'session'     
+    }),
+    secret: process.env.SESSION_SECRET || 'supersecretbouncerkey',
     resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60 * 60 * 1000 } // Session expires after 1 hour of inactivity
+    saveUninitialized: false,   
+    cookie: { 
+        maxAge: 60 * 60 * 1000,  // 1 Hour duration
+        secure: false            
+    }
 }));
 
 // Use flash message middleware
@@ -64,23 +74,20 @@ app.use((req, res, next) => {
     if (NODE_ENV === 'development') {
         console.log(`${req.method} ${req.url}`);
     }
-    next(); // Pass control to the next middleware or route
+    next(); 
 });
 
-// Locate this block in server.js and make sure it assigns res.locals.user
+// Context setup mapping global locals for EJS views
 app.use((req, res, next) => {
     res.locals.isLoggedIn = false;
     if (req.session && req.session.user) {
         res.locals.isLoggedIn = true;
     }
 
-    // 👈 Crucial: pass the full user session data (including role_name) to templates
     res.locals.user = req.session.user || null; 
-
-    res.locals.NODE_ENV = process.env.NODE_ENV; // ensure process context is read properly
+    res.locals.NODE_ENV = NODE_ENV; 
     next();
 });
-
 
 // Use the imported router to handle routes
 app.use(router);
@@ -94,22 +101,18 @@ app.use((req, res, next) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
-    // Log error details for debugging
     console.error('Error occurred:', err.message);
     console.error('Stack trace:', err.stack);
     
-    // Determine status and template
     const status = err.status || 500;
     const template = status === 404 ? '404' : '500';
     
-    // Prepare data for the template
     const context = {
         title: status === 404 ? 'Page Not Found' : 'Server Error',
         error: err.message,
         stack: err.stack
     };
     
-    // Render the appropriate error template
     res.status(status).render(`errors/${template}`, context);
 });
 
