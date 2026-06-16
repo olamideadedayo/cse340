@@ -61,4 +61,25 @@ const authenticateUser = async (email, password) => {
     return null; // Password incorrect
 };
 
-export { createUser, authenticateUser };
+/**
+ * Fetch all registered users with their mapped role names
+ * for the administrative management panel.
+ */
+ const getAllUsersWithRoles = async () => {
+    try {
+        const query = `
+            SELECT u.user_id, u.name, u.email, r.role_name 
+            FROM users u
+            JOIN roles r ON u.role_id = r.role_id
+            ORDER BY u.name ASC
+        `;
+        const result = await db.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error("Database error in getAllUsersWithRoles:", error.message);
+        throw error;
+    }
+};
+
+
+export { createUser, authenticateUser, getAllUsersWithRoles }

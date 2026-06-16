@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<main class="management-container">
+    <h1><%= title %></h1>
+    <p>Administrative access panel displaying all registered users across the platform ecosystem:</p>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email / Username</th>
+                <th>Security Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% usersList.forEach(sysUser => { %>
+                <tr>
+                    <td><%= sysUser.name %></td>
+                    <td><%= sysUser.email %></td>
+                    <td>
+                        <span class="role-badge <%= sysUser.role_name %>">
+                            <%= sysUser.role_name %>
+                        </span>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</main>
+
+<%- include('../partials/footer') %>

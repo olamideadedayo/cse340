@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
-import { createUser, authenticateUser } from '../models/users.js';
+import { createUser, authenticateUser, getAllUsersWithRoles } from '../models/users.js';
+import { getProjectsByVolunteer } from '../models/volunteers.js';
 
 // ==========================================
 // REGISTRATION CONTROLLER FUNCTIONS
@@ -8,7 +9,7 @@ import { createUser, authenticateUser } from '../models/users.js';
 /**
  * Middleware factory to require a specific role for route access
  * Returns middleware that checks if user has the required role
- * * @param {string} role - The role name required (e.g., 'admin', 'user')
+ * @param {string} role - The role name required (e.g., 'admin', 'user')
  * @returns {Function} Express middleware function
  */
 export const requireRole = (role) => {
@@ -29,7 +30,6 @@ export const requireRole = (role) => {
         next();
     };
 };
-
 
 export const showUserRegistrationForm = (req, res) => {
     res.render('register', { title: 'Register' });
@@ -71,16 +71,17 @@ export const processLoginForm = async (req, res) => {
 
     try {
         const user = await authenticateUser(email, password);
+        
+        // 🔍 DEBUG LOG 1: What did the database return?
+        console.log('--- AUTHENTICATE USER RESULT ---', user);
+
         if (user) {
-            // Store user info in session
             req.session.user = user;
+            
+            // 🔍 DEBUG LOG 2: Is it successfully inside the session right now?
+            console.log('--- SESSION USER SET TO ---', req.session.user);
+
             req.flash('success', 'Login successful!');
-
-            if (res.locals.NODE_ENV === 'development') {
-                console.log('User logged in:', user);
-            }
-
-            // Redirects straight to the protected dashboard
             res.redirect('/dashboard');
         } else {
             req.flash('error', 'Invalid email or password.');
@@ -117,11 +118,52 @@ export const requireLogin = (req, res, next) => {
 };
 
 // 5. Add the Dashboard View Controller
-export const showDashboard = (req, res) => {
+export const showDashboard = async (req, res) => {
     const user = req.session.user;
-    res.render('dashboard', { 
-        title: 'Dashboard',
-        name: user.name,
-        email: user.email
-    });
+    
+    // 🔍 TEMPORARY DEBUG LOG 3
+    console.log("--- CURRENT DASHBOARD USER SESSION ---", user);
+
+    try {
+        // Fetch projects the logged-in user has signed up for
+        const volunteeredProjects = await getProjectsByVolunteer(user.user_id);
+
+        res.render('dashboard', {
+            title: 'Dashboard',
+            name: user.name,
+            email: user.email,
+            user,
+            volunteeredProjects // 👈 Passed down to loop over in your EJS view
+        });
+    } catch (error) {
+        console.error('Error fetching dashboard projects:', error);
+        req.flash('error', 'Could not retrieve your volunteered projects list.');
+        res.render('dashboard', {
+            title: 'Dashboard',
+            name: user.name,
+            email: user.email,
+            user,
+            volunteeredProjects: [] // Fallback to avoid breaking the view on error
+        });
+    }
+};
+// ==========================================
+// ADMINISTRATIVE FUNCTIONS
+// ==========================================
+
+/**
+ * Display the Admin-only Users Management Directory
+ */
+export const showUsersManagementPage = async (req, res, next) => {
+    try {
+        const systemUsers = await getAllUsersWithRoles();
+        
+        res.render('users/management', {
+            title: 'Manage System Users',
+            usersList: systemUsers
+        });
+    } catch (error) {
+        console.error('Error rendering users management directory:', error);
+        next(error);
+    }
 };

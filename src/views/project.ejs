@@ -2,16 +2,30 @@
 
 <h1><%= title %></h1>
 
+<div class="volunteer-card">
+    <% if (isLoggedIn) { %>
+        <% if (isVolunteering) { %>
+            <p class="volunteer-status-success">✓ You are volunteering for this project!</p>
+            <p>Changed your mind? <a href="/projects/<%= project.project_id %>/leave" class="link-danger">Remove yourself as a volunteer</a></p>
+        <% } else { %>
+            <p>Interested in supporting this cause?</p>
+            <a href="/projects/<%= project.project_id %>/volunteer" class="btn btn-primary">🙋 Volunteer for This Project</a>
+        <% } %>
+    <% } else { %>
+        <p><em>Please <a href="/login" class="link-auth">log in</a> to sign up as a volunteer for this project.</em></p>
+    <% } %>
+</div>
+
 <div class="project-tags">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-        <h3 style="margin: 0;">Categories:</h3>
+    <div class="project-actions-header">
+        <h3>Categories:</h3>
         
-        <div style="display: flex; gap: 0.5rem;">
-            <a href="/edit-project/<%= project.project_id %>" class="btn-submit" style="text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.8rem; background-color: #4a5568;">
+        <div class="project-actions-buttons">
+            <a href="/edit-project/<%= project.project_id %>" class="btn-submit">
                 Edit Project
             </a>
             
-            <a href="/project/<%= project.project_id %>/assign-categories" class="btn-submit" style="text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+            <a href="/project/<%= project.project_id %>/assign-categories" class="btn-submit">
                 Edit Categories
             </a>
         </div>
@@ -28,9 +42,13 @@
     <% } else { %>
         <p class="no-projects">No category tags assigned to this project.</p>
     <% } %>
+    
     <% if (user && user.role_name === 'admin') { %>
-    <a href="/edit-project/<%= project.project_id %>" class="btn">Edit Project Details</a>
-    <a href="/project/<%= project.project_id %>/assign-categories" class="btn">Manage Categories</a>
-<% } %>
+        <div class="admin-controls">
+            <a href="/edit-project/<%= project.project_id %>" class="btn">Edit Project Details</a>
+            <a href="/project/<%= project.project_id %>/assign-categories" class="btn">Manage Categories</a>
+        </div>
+    <% } %>
 </div>
+
 <%- include('partials/footer') %>

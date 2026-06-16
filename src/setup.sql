@@ -90,3 +90,12 @@ INSERT INTO public.roles (role_name, r.role_description) VALUES
 ('user', 'Standard user with basic access'),
 ('admin', 'Administrator with full system access')
 ON CONFLICT (role_name) DO NOTHING;
+
+
+CREATE TABLE IF NOT EXISTS project_volunteers (
+    volunteer_id SERIAL PRIMARY KEY,
+    project_id INT REFERENCES projects(id) ON DELETE CASCADE,
+    user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(project_id, user_id) -- Ensures a user cannot sign up for the exact same project twice
+);

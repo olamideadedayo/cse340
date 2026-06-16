@@ -13,7 +13,8 @@ import {
     processLogout,
     requireLogin,   
     showDashboard,
-    requireRole // 👈 Added requireRole to the import list
+    requireRole,
+    showUsersManagementPage
 } from './controllers/users.js';
 
 import { 
@@ -44,6 +45,9 @@ import {
     processEditCategoryForm, 
     categoryValidation 
 } from './controllers/categories.js';
+
+import { handleJoinProject, handleLeaveProject } from './controllers/volunteers.js';
+
 
 const router = express.Router();
 
@@ -94,12 +98,6 @@ router.post('/project/:projectId/assign-categories', requireRole('admin'), proce
 router.get('/edit-organization/:id', requireRole('admin'), showEditOrganizationForm);
 router.post('/edit-organization/:id', requireRole('admin'), organizationValidation, processEditOrganizationForm);
 
-router.get('/edit-project/:id', requireRole('admin'), showEditProjectForm);
-router.post('/edit-project/:id', requireRole('admin'), processEditProjectForm);
-
-router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
-router.post('/edit-category/:id', requireRole('admin'), categoryValidation, processEditCategoryForm);
-
 // Single Item View Details (Public View)
 router.get('/project/:id', showProjectDetailsPage);
 router.get('/category/:id', getCategoryDetails);
@@ -107,5 +105,12 @@ router.get('/organization/:id', showOrganizationDetailsPage);
 
 // Protected dashboard route (Standard Users & Admins)
 router.get('/dashboard', requireLogin, showDashboard);
+
+// Admin-only Access Panel: View all system users
+router.get('/admin/users', requireRole('admin'), showUsersManagementPage);
+
+// Volunteer management routes (Protected by requireLogin)
+router.get('/projects/:projectId/volunteer', requireLogin, handleJoinProject);
+router.get('/projects/:projectId/leave', requireLogin, handleLeaveProject); // 👈 Added requireLogin here
 
 export default router;
